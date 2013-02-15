@@ -7,8 +7,14 @@ import os
 import random
 import binascii
 import requests
-import errors
+from errors import ValidationError, RequestError
 from crypto import *
+from ostools import get_temp_dir
+import logging
+import logging.handlers
+
+logger = logging.getLogger()
+logging.captureWarnings(True)
 
 class Mega(object):
 
@@ -19,6 +25,16 @@ class Mega(object):
         self.sid = None
         self.sequence_num = random.randint(0, 0xFFFFFFFF)
         self.request_id = make_id(10)
+        logfile = os.path.join(get_temp_dir(), "mega.log")
+
+        # Note that this will rotate the last 5 log files, on a daily basis:
+        logger.addHandler(logging.handlers.TimedRotatingFileHandler(
+            logfile,
+            when='D',
+            interval=1,
+            backupCount=5,
+        ))
+        logger.setLevel(logging.INFO)
 
     @classmethod
     def login(class_, email, password):
@@ -32,7 +48,7 @@ class Mega(object):
         resp = self.api_request({'a': 'us', 'user': email, 'uh': uh})
         #if numeric error code response
         if isinstance(resp, int):
-            raise errors.RequestError(resp)
+            raise RequestError(resp)
         self._login_process(resp, password_aes)
 
     def _login_process(self, resp, password):
@@ -78,7 +94,7 @@ class Mega(object):
 
         #if numeric error code response
         if isinstance(json_resp, int):
-            raise errors.RequestError(json_resp)
+            raise RequestError(json_resp)
         return json_resp[0]
 
     def get_files(self):
@@ -124,7 +140,7 @@ class Mega(object):
                                                 public_handle,
                                                 decrypted_key)
         else:
-            raise errors.ValidationError('File id and key must be present')
+            raise ValidationError('File id and key must be present')
 
     def download_url(self, url):
         '''
@@ -149,7 +165,7 @@ class Mega(object):
             path = match[0]
             return path
         else:
-            raise errors.RequestError('Url key missing')
+            raise RequestError('Url key missing')
 
     def get_user(self):
         user_data =  self.api_request({'a': 'ug'})
