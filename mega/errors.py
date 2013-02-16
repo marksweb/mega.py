@@ -47,6 +47,7 @@ class ValidationError(Exception):
         return repr(self.value)
 
 
+
 class RequestError(Exception):
     """
     Error in API request

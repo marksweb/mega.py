@@ -12,6 +12,15 @@ This is a work in progress, further functionality coming shortly.
 
 ## How To Use
 
+### Install mega.py package
+
+    #Run the following command, or run setup from the latest github source
+    sudo pip install mega.py
+
+### Import mega.py
+
+    from mega import Mega
+
 ### Create an instance of Mega.py
 
     mega = Mega()
@@ -33,10 +42,11 @@ This is a work in progress, further functionality coming shortly.
     file = m.upload('myfile.doc')
     m.get_upload_link(file)
 
-### Download a file from URL or file obj
+### Download a file from URL or file obj, optionally specify destination folder
     file = m.find('myfile.doc')
     m.download(file)
     m.download_url('https://mega.co.nz/#!utYjgSTQ!OM4U3V5v_W4N5edSo0wolg1D5H0fwSrLD3oLnLuS9pc')
+    m.download(file, '/home/john-smith/Desktop')
 
 ### Search account for a file, and get its public link
     file = m.find('myfile.doc')
@@ -59,16 +69,17 @@ This is a work in progress, further functionality coming shortly.
 
 ## Tests
 
-    Test .py files can be found in /tests, run these to ensure Mega.py is working 100%.
+    Test .py files can be found in tests.py, run these to ensure Mega.py is working 100%.
 
 ## Contribute
 
     Feel free to pull the source and make changes and additions.
 
-    Learn about the API at Mega.co.nz
+    Learn about the API at Mega.co.nz, more documentation coming shortly.
     - https://mega.co.nz/#developers
 
 
-    Thanks to http://juIien-marchand.fr/blog/contact for examples
+
+Thanks to http://julien-marchand.com/blog/contact for examples
 
 

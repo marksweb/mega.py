@@ -48,10 +48,13 @@ def test():
         #trash a file by it's id
         print(m.delete(file[1]['k']))
 
-    ##download file, by id+key or url
-    #file = m.find('myfile.doc')
+    ##download file
+    #file = m.find('tests.py')
     #m.download(file)
-    #m.download_url('https://mega.co.nz/#!6hBW0R4a!By7-Vjj5xal8K5w_IXH3PlGNyZ1VvIrjZkOmHGq1X00')
+    ##specify destination folder
+    #m.download(file, '/home/user_name/Desktop')
+        #m.download_url('https://mega.co.nz/#!6hBW0R4a!By7-Vjj5xal8K5w_IXH3PlGNyZ1VvIrjZkOmHGq1X00')
+
 
 if __name__ == '__main__':
     test()
