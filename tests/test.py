@@ -1,4 +1,3 @@
-import logging
 from mega import Mega
 
 def test():
@@ -9,7 +8,7 @@ def test():
     mega = Mega()
 
     ##login
-    m = mega.login(email, password)
+    m =  mega.login(email, password)
 
     ##get user details
     details = m.get_user()
@@ -22,21 +21,14 @@ def test():
         if files[file]['a'] != False:
             print files[file]
 
-    try:
-        ##upload file
-        print(m.upload('test.py'))
-    except IOError:
-        logging.info('IOError: {0}'.format(IOError))
+    ##upload file
+    print(m.upload('test.py'))
 
     ##get file's public link
     #NOTE: if passing upload() function response use get_upload_link()
     file = m.find('test.py')
-
-    try:
-        #print(m.get_upload_link(file))
-        print(m.get_link(file))
-    except TypeError:
-        logging.info('TypeError: {0}'.format(TypeError))
+    #print(m.get_upload_link(file))
+    print(m.get_link(file))
 
     ##trash a file, by id or url
     #print(m.delete('f14U0JhD'))
