@@ -1,4 +1,3 @@
-import logging
 from mega import Mega
 
 def test():
@@ -19,18 +18,17 @@ def test():
     files = m.get_files()
     #example iterate over files
     for file in files:
-        if files[file]['a'] != False:
-            print files[file]
+        print files[file]
 
     try:
         ##upload file
-        print(m.upload('test.py'))
+        print(m.upload('tests.py'))
     except IOError:
         logging.info('IOError: {0}'.format(IOError))
 
     ##get file's public link
     #NOTE: if passing upload() function response use get_upload_link()
-    file = m.find('test.py')
+    file = m.find('tests.py')
 
     try:
         #print(m.get_upload_link(file))
