@@ -30,14 +30,15 @@ def get_package_data(package):
 
 setup(
     name='mega.py',
-    version='0.8.2',
+    version='0.9.17',
     packages=get_packages('mega'),
     package_data=get_package_data('mega'),
     description='Python lib for the Mega.co.nz API',
     author='Richard O\'Dwyer',
     author_email='richard@richard.do',
     license='Creative Commons Attribution-Noncommercial-Share Alike license',
-    long_description=open('README.md').read(),
+    long_description='https://github.com/richardasaurus/mega.py',
+    install_requires=['pycrypto', 'requests'],
     classifiers=[
         'Intended Audience :: Developers',
         'Operating System :: OS Independent',
