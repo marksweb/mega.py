@@ -1,22 +1,26 @@
-import re
+import binascii
 import json
+import logging
+import logging.handlers
+import os
+import random
+import re
+import requests
+import shutil
+import tempfile
+
 from Crypto.Cipher import AES
 from Crypto.PublicKey import RSA
 from Crypto.Util import Counter
-import os
-import random
-import binascii
-import logging
-import logging.handlers
+from datetime import datetime
+
 from helpers.crypto import *
-import requests
-import shutil
-from .errors import ValidationError, RequestError
-from .crypto import *
-import tempfile
+from helpers.errors import ValidationError, RequestError
+from helpers.ostools import get_temp_dir
 
 logger = logging.getLogger()
 logging.captureWarnings(True)
+
 
 class Mega(object):
     def __init__(self, options=None):
@@ -36,6 +40,8 @@ class Mega(object):
             backupCount=5,
         ))
         logger.setLevel(logging.INFO)
+	    logging.info(80 * "=")
+	    logging.info("-- {} --".format(datetime.now().strftime("%H:%M:%S - %d-%m-%Y")))
 
         if options is None:
             options = {}
