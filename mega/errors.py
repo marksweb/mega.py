@@ -3,6 +3,7 @@ __author__ = 'Mark Walker'
 import logging
 import re
 
+logger = logging.getLogger('mega.mega')
 errordict = {
     1: """An internal error has occurred. Please submit a bug report,
         detailing the exact circumstances in which this error occurred.""",
@@ -38,7 +39,7 @@ class ValidationError(Exception):
     """
     def __init__(self, value):
         self.value = re.sub('-', '', str(value))
-        logging.info('Validation error: {0}'.format(errordict[int(self.value)]))
+        logger.info('Validation error: {0}'.format(errordict[int(self.value)]))
 
     def __str__(self):
         return repr(self.value)
@@ -51,7 +52,7 @@ class RequestError(Exception):
     """
     def __init__(self, value):
         self.value = re.sub('-', '', str(value))
-        logging.info('Request error: {0}'.format(errordict[int(self.value)]))
+        logger.info('Request error: {0}'.format(errordict[int(self.value)]))
 
     def __str__(self):
         return repr(self.value)
