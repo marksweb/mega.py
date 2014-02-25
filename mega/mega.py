@@ -13,8 +13,8 @@ from Crypto.Cipher import AES
 from Crypto.PublicKey import RSA
 from Crypto.Util import Counter
 
-from helpers.crypto import *
-from helpers.errors import ValidationError, RequestError
+from .crypto import *
+from .errors import ValidationError, RequestError
 
 logger = logging.getLogger(__name__)
 logging.captureWarnings(True)
@@ -31,8 +31,8 @@ class Mega(object):
         logfile = os.path.join(tempfile.gettempdir(), "mega.log")
         # create formatter
         formatter = logging.Formatter(
-            "%(asctime)s - %(levelname)s %(message)s",
-            "%H:%M:%S %Y-%m-%d "
+            "%(asctime)s - %(levelname)s - %(message)s",
+            "%H:%M:%S %Y-%m-%d"
         )
 
         # Note that this will rotate the last 5 log files, on a daily basis:
@@ -544,7 +544,7 @@ class Mega(object):
             if self.options.get('verbose') is True:
                 # temp file size
                 file_info = os.stat(temp_output_file.name)
-                print('{0} of {1} downloaded'.format(file_info.st_size, file_size))
+                logger.info('{0} of {1} downloaded'.format(file_info.st_size, file_size))
 
         file_mac = str_to_a32(mac_str)
 
@@ -612,7 +612,7 @@ class Mega(object):
 
                 if self.options.get('verbose') is True:
                     # upload progress
-                    print('{0} of {1} uploaded'.format(upload_progress, file_size))
+                    logger.info('{0} of {1} uploaded'.format(upload_progress, file_size))
         else:
             output_file = requests.post(ul_url + "/0",
                                             data='', timeout=self.timeout)
