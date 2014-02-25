@@ -38,10 +38,7 @@ class ValidationError(Exception):
     """
     def __init__(self, value):
         self.value = re.sub('-', '', str(value))
-        #try:
         logging.info('Validation error: {0}'.format(errordict[int(self.value)]))
-        #except:
-        #    logging.info('Validation error: {0}'.format(self.value))
 
     def __str__(self):
         return repr(self.value)
@@ -54,10 +51,7 @@ class RequestError(Exception):
     """
     def __init__(self, value):
         self.value = re.sub('-', '', str(value))
-        #try:
         logging.info('Request error: {0}'.format(errordict[int(self.value)]))
-        #except:
-        #    logging.info('Validation error: {0}'.format(self.value))
 
     def __str__(self):
         return repr(self.value)
