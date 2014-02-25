@@ -1,7 +1,6 @@
 import binascii
 import json
 import logging
-import logging.handlers
 import os
 import random
 import re
@@ -16,9 +15,8 @@ from datetime import datetime
 
 from helpers.crypto import *
 from helpers.errors import ValidationError, RequestError
-from helpers.ostools import get_temp_dir
 
-logger = logging.getLogger()
+logger = logging.getLogger(__name__)
 logging.captureWarnings(True)
 
 
@@ -30,7 +28,7 @@ class Mega(object):
         self.sid = None
         self.sequence_num = random.randint(0, 0xFFFFFFFF)
         self.request_id = make_id(10)
-        logfile = os.path.join(get_temp_dir(), "mega.log")
+        logfile = os.path.join(tempfile.gettempdir(), "mega.log")
 
         # Note that this will rotate the last 5 log files, on a daily basis:
         logger.addHandler(logging.handlers.TimedRotatingFileHandler(
