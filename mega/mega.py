@@ -11,7 +11,6 @@ import tempfile
 from Crypto.Cipher import AES
 from Crypto.PublicKey import RSA
 from Crypto.Util import Counter
-from datetime import datetime
 
 from helpers.crypto import *
 from helpers.errors import ValidationError, RequestError
@@ -29,17 +28,22 @@ class Mega(object):
         self.sequence_num = random.randint(0, 0xFFFFFFFF)
         self.request_id = make_id(10)
         logfile = os.path.join(tempfile.gettempdir(), "mega.log")
+        # create formatter
+        formatter = logging.Formatter(
+            "%(asctime)s - %(levelname)s %(message)s",
+            "%H:%M:%S %Y-%m-%d "
+        )
 
         # Note that this will rotate the last 5 log files, on a daily basis:
-        logger.addHandler(logging.handlers.TimedRotatingFileHandler(
+        fh = logging.handlers.TimedRotatingFileHandler(
             logfile,
             when='D',
             interval=1,
             backupCount=5,
-        ))
+        )
+        fh.setFormatter(formatter)
+        logger.addHandler(fh)
         logger.setLevel(logging.INFO)
-	    logging.info(80 * "=")
-	    logging.info("-- {} --".format(datetime.now().strftime("%H:%M:%S - %d-%m-%Y")))
 
         if options is None:
             options = {}
